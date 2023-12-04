@@ -1,0 +1,8 @@
+{
+    "bucket" : "adu-project-data",
+    "parent_prefix" : "adu-template-main",
+
+    "fetch" : {
+		"store/data/" : "store/data/"
+    }
+}

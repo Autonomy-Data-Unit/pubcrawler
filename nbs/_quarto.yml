@@ -1,0 +1,25 @@
+project:
+  type: website
+
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+    toc-depth: 4
+
+website:
+  favicon: adu_docs_favicon.png
+  twitter-card: true
+  open-graph: true
+  repo-actions: [issue]
+  navbar:
+    background: primary
+    search: true
+    right:
+      - icon: github
+        href: "https://github.com/Autonomy-Data-Unit/adu-template-main"
+  sidebar:
+    style: floating
+
+metadata-files: [nbdev.yml, sidebar.yml]

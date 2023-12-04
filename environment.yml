@@ -1,0 +1,5 @@
+name: adu-template-main
+channels:
+  - defaults
+dependencies:
+  - python=3.10

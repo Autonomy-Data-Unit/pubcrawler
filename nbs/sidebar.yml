@@ -1,0 +1,18 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - const.ipynb
+      - section: cli
+        contents:
+          - cli/cli_01_core.ipynb
+          - cli/cli_02_foo.ipynb
+      - section: core
+        contents:
+          - core/01_first_steps.ipynb
+      - section: tools
+        contents:
+          - tools/01_foo.ipynb
+      - section: utils
+        contents:
+          - utils/utils_01_general.ipynb

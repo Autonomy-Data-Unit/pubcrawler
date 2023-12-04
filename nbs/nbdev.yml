@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "adu-template-main"
+  site-url: "https://docs.autonomy.work/docs/adu-template-main"
+  description: ""
+  repo-branch: main
+  repo-url: "https://github.com/Autonomy-Data-Unit/adu-template-main"
