@@ -6,7 +6,7 @@ __all__ = ['cmd_name', 'cmd_description', 'parser', 'args', 'const_dict', 'log_n
 # %% ../../nbs/cli/cli_02_foo.ipynb 4
 import sys
 
-import adu_template_main as proj
+import pubcrawler as proj
 from .. import const, log, utils, tools
 import adu_proj.utils as adutils
 

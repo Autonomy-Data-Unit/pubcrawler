@@ -4,7 +4,7 @@
 __all__ = ['foo']
 
 # %% ../../nbs/tools/01_foo.ipynb 5
-import adu_template_main as proj
+import pubcrawler as proj
 from .. import const, log, utils, tools
 import adu_proj.utils as adutils
 

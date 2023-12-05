@@ -1,4 +1,4 @@
-name: adu-template-main
+name: pubcrawler
 channels:
   - defaults
 dependencies:

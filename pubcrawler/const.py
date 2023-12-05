@@ -5,7 +5,7 @@ __all__ = ['root_path', 'store_path', 'logs_path', 'data_path', 'pre_output_path
 
 # %% ../nbs/const.ipynb 4
 from pathlib import Path
-import adu_template_main as proj
+import pubcrawler as proj
 
 # %% ../nbs/const.ipynb 6
 root_path = Path(proj.__file__).parent.resolve().as_posix()

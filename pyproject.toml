@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "pubcrawler"
+version = "0.1.0"
+description = ""
+authors = ["seangreaves <greaves.sean@btinternet.com>"]
+readme = "README.md"
+include = [
+    { path = "CHANGELOG.md", format = ["sdist", "wheel"] },
+    { path = "README.md", format = ["sdist", "wheel"] }
+]
+exclude = ["pubcrawler/store/*"]
+
+
+[tool.poetry.dependencies]
+python = "^3.10,<3.13"
+matplotlib = "^3.8.2"
+pandas = "^2.1.3"
+numpy = "^1.26.2"
+adu-proj = {version = "^0.1.14", source = "adu"}
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+
+[[tool.poetry.source]]
+name = "adu"
+url = "https://pip.autonomy.work"
+priority = "supplemental"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+nbdev = "^2.3.13"
+adu-tools = {version = "^0.2.33", source = "adu"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

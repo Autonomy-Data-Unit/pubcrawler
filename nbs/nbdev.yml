@@ -2,8 +2,8 @@ project:
   output-dir: _docs
 
 website:
-  title: "adu-template-main"
-  site-url: "https://docs.autonomy.work/docs/adu-template-main"
+  title: "pubcrawler"
+  site-url: "https://docs.autonomy.work/docs/pubcrawler"
   description: ""
   repo-branch: main
-  repo-url: "https://github.com/Autonomy-Data-Unit/adu-template-main"
+  repo-url: "https://github.com/Autonomy-Data-Unit/pubcrawler"

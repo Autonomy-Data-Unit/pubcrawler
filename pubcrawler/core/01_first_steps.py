@@ -4,7 +4,7 @@
 __all__ = []
 
 # %% ../../nbs/core/01_first_steps.ipynb 5
-import adu_template_main as proj
+import pubcrawler as proj
 from .. import const, log, utils, tools
 import adu_proj.utils as adutils
 

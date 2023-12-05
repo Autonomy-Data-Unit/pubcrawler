@@ -1,6 +1,6 @@
 {
     "bucket" : "adu-project-data",
-    "parent_prefix" : "adu-template-main",
+    "parent_prefix" : "pubcrawler",
 
     "fetch" : {
 		"store/data/" : "store/data/"
