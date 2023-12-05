@@ -21,6 +21,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from urllib.parse import urlparse
 from time import sleep
 import pandas as pd
+import json
 
 # %% ../../nbs/core/02_crawl.ipynb 7
 chrome_options = Options()
@@ -102,4 +103,6 @@ pubcrawl(url, visited_urls, file_type, file_links, driver, urlparse(url).netloc)
 print("\nℭ𝔯𝔞𝔴𝔩 𝔠𝔬𝔪𝔭𝔩𝔢𝔱𝔢 💀💀💀")
 
 # %% ../../nbs/core/02_crawl.ipynb 15
-pd.DataFrame([{'file_link': key, 'parent_links': file_links[key]['parent_links']} for key in file_links]).to_csv(f'{const.pre_output_path}/files.csv', index=False)
+# pd.DataFrame([{'file_link': key, 'parent_links': file_links[key]['parent_links']} for key in file_links]).to_csv(f'{const.pre_output_path}/files.csv', index=False)
+with open(f'{const.pre_output_path}/data.json', 'w') as f:
+    json.dump(file_links, f)
