@@ -20,8 +20,6 @@ d = { 'settings': { 'branch': 'main',
                                              'pubcrawler.core.04_metadata.get_pdf_metadata': ( 'core/metadata.html#get_pdf_metadata',
                                                                                                'pubcrawler/core/04_metadata.py')},
             'pubcrawler.core.05_analyse': {},
-            'pubcrawler.core.05_met': { 'pubcrawler.core.05_met.extract_text_from_first_n_pages': ( 'core/analysis.html#extract_text_from_first_n_pages',
-                                                                                                    'pubcrawler/core/05_met.py')},
             'pubcrawler.tools.foo': {'pubcrawler.tools.foo.foo': ('tools/foo.html#foo', 'pubcrawler/tools/foo.py')},
             'pubcrawler.utils.general': { 'pubcrawler.utils.general.hello_world': ( 'utils/utils_01_general.html#hello_world',
                                                                                     'pubcrawler/utils/general.py')}}}
