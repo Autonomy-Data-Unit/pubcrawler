@@ -101,6 +101,7 @@ print("𝔏𝔢𝔱 𝔱𝔥𝔢 𝔠𝔯𝔞𝔴𝔩 𝔠𝔬𝔪𝔪𝔢𝔫�
 print("\nSites visited:")
 pubcrawl(url, visited_urls, file_type, file_links, driver, urlparse(url).netloc)
 print("\nℭ𝔯𝔞𝔴𝔩 𝔠𝔬𝔪𝔭𝔩𝔢𝔱𝔢 💀💀💀")
+print(f"Visited {len(visited_urls)} webpages")
 
 # %% ../../nbs/core/02_crawl.ipynb 15
 # pd.DataFrame([{'file_link': key, 'parent_links': file_links[key]['parent_links']} for key in file_links]).to_csv(f'{const.pre_output_path}/files.csv', index=False)

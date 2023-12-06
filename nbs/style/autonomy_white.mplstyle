@@ -1,0 +1,32 @@
+lines.linewidth : 3
+lines.markersize : 10
+font.family  : Josefin Sans
+font.style   : normal
+font.variant : normal
+font.weight  : regular
+font.stretch : normal
+font.size    : 10.0
+axes.facecolor: fdfdfd
+axes.edgecolor: 333333
+axes.labelcolor: 333333
+axes.labelweight : regular
+axes.linewidth: 1
+axes.titlesize : 24
+axes.labelsize : 20
+axes.spines.top    : False
+axes.spines.right  : False
+text.color : 333333
+figure.facecolor: fdfdfd
+figure.edgecolor: fdfdfd
+figure.figsize     : 12, 9
+figure.dpi         : 200
+## TICKS
+xtick.color: 333333
+xtick.labelsize : 16
+ytick.color: 333333
+ytick.labelsize : 16
+savefig.facecolor: fdfdfd
+savefig.edgecolor: fdfdfd
+savefig.bbox      : tight
+savefig.pad_inches   : 0.2
+svg.fonttype : none

@@ -17,6 +17,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import WebDriverException
 from tqdm import tqdm
 
 # %% ../../nbs/core/03_download.ipynb 6
@@ -44,34 +45,39 @@ def download_file(file_url: str, # file url
                  download_dir: str, # directory to download file to 
                  ):
     "Download file to directory"
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)    
-    driver.get(file_url)
-    # Wait for the download to complete with checks
-    filename = file_url.split('/')[-1]
-    max_wait = 90
-    wait_interval = 1
-    file_path = os.path.join(download_dir, filename)
-    temp_file_path = file_path + ".crdownload"    
-    start_time = time.time()
-    time.sleep(wait_interval)
-    while not os.path.exists(file_path):
-        if os.path.exists(temp_file_path):
-            time.sleep(wait_interval)
-        else:
-            print("here")
-            break
-        if time.time() - start_time > max_wait:
-                print("Download timed out.")
+    try:
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)    
+        driver.get(file_url)
+        # Wait for the download to complete with checks
+        filename = file_url.split('/')[-1]
+        max_wait = 90
+        wait_interval = 1
+        file_path = os.path.join(download_dir, filename)
+        temp_file_path = file_path + ".crdownload"    
+        start_time = time.time()
+        time.sleep(wait_interval)
+        while not os.path.exists(file_path):
+            if os.path.exists(temp_file_path):
+                time.sleep(wait_interval)
+            else:
                 break
-    # Verify download and close the browser
-    driver.close()
-    driver.quit()
-    if os.path.isfile(file_path):
-        return file_path
-    else:
-        print("Download failed")
-        return None
+            if time.time() - start_time > max_wait:
+                    print("Download timed out.")
+                    break
+        # Verify download and close the browser
+        driver.close()
+        driver.quit()
+        if os.path.isfile(file_path):
+            return file_path
+        else:
+            print(f"Download failed for {file_url}")
+            return None
+    except WebDriverException as e:
+        print(f"An error occurred while trying to download the file: {e}")
+        driver.close()
+        driver.quit()
+        return None  
 
 # %% ../../nbs/core/03_download.ipynb 10
 for key in tqdm(file_links):
