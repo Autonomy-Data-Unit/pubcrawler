@@ -80,10 +80,10 @@ def pubcrawl(url: str, # url to get links for
             break  # If successful, exit the loop
         except Exception as e:
             if attempt < 1:  # Only retry once
-                print(f"Retrying {current_url} due to error: {e}")
+                print(f"Retrying {url} due to error: {e}")
                 continue
             else:
-                print(f"Failed to access {current_url} after retrying: {e}")
+                print(f"Failed to access {url} after retrying: {e}")
                 return  # Skip to the next URL if both attempts fail
     if url == base_domain:
         sleep(5)

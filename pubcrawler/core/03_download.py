@@ -84,6 +84,5 @@ for key in tqdm(file_links):
     file_links[key]['file_path'] = download_file(key, file_dir)
 
 # %% ../../nbs/core/03_download.ipynb 11
-# pd.DataFrame([{'file_link': key, 'parent_links': file_links[key]['parent_links']} for key in file_links]).to_csv(f'{const.pre_output_path}/files.csv', index=False)
 with open(f'{const.pre_output_path}/data_files.json', 'w') as f:
     json.dump(file_links, f)

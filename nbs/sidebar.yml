@@ -9,7 +9,11 @@ website:
           - cli/cli_02_foo.ipynb
       - section: core
         contents:
-          - core/01_first_steps.ipynb
+          - core/01_clean.ipynb
+          - core/02_crawl.ipynb
+          - core/03_download.ipynb
+          - core/04_metadata.ipynb
+          - core/05_analysis.ipynb
       - section: tools
         contents:
           - tools/01_foo.ipynb
