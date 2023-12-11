@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['root_path', 'store_path', 'logs_path', 'data_path', 'pre_output_path', 'output_path', 'figs_path', 'style_path',
-           'url', 'directory_name', 'file_type', 'model', 'org_names']
+           'url', 'directory_name', 'file_type', 'model', 'org_names', 'clean_dir']
 
 # %% ../nbs/const.ipynb 4
 from pathlib import Path
@@ -29,21 +29,11 @@ Path(output_path).mkdir(exist_ok=True)
 Path(figs_path).mkdir(exist_ok=True)
 
 # %% ../nbs/const.ipynb 8
-# url = 'https://www.thegwpf.org/'
-# file_type = 'pdf'
-# model = 'gpt-3.5-turbo'
-# org_names = ['global warming policy foundation', 'gwpf'] # lowercase
-
-# %% ../nbs/const.ipynb 9
-# url = 'https://www.thegwpf.org/'
-# directory_name = 'gwpf'
-# file_type = 'pdf'
-# model = 'gpt-3.5-turbo'
-# org_names = ['global warming policy foundation', 'gwpf'] # lowercase
-
-# %% ../nbs/const.ipynb 10
-url = 'https://oxgs.org/'
-directory_name = 'oxford'
+url = 'https://autonomy.work/'
+directory_name = 'autonomy'
 file_type = 'pdf'
 model = 'gpt-4'
-org_names = ['oxford global society'] 
+org_names = ['autonomy'] 
+
+# %% ../nbs/const.ipynb 9
+clean_dir = False

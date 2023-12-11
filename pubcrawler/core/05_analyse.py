@@ -2,11 +2,10 @@
 
 # %% auto 0
 __all__ = ['plots_dir', 'org_pubs', 'authors', 'author_frequency', 'threshold', 'grouped_author_counts', 'top_10_authors',
-           'items', 'frequencies', 'organisations', 'organisation_frequency', 'grouped_org_counts', 'top_10_orgs',
-           'max_frequency', 'step', 'funders', 'funder_frequency', 'grouped_funder_counts', 'top_10_funders',
-           'keywords', 'keyword_frequency', 'grouped_keyword_counts', 'top_10_keywords', 'year_counts',
-           'org_pubs_monthly', 'fig', 'html_filename', 'author_lists', 'G', 'find_best_match', 'extract_year',
-           'contains_month_and_year', 'split_text']
+           'organisations', 'organisation_frequency', 'grouped_org_counts', 'top_10_orgs', 'funders',
+           'funder_frequency', 'grouped_funder_counts', 'top_10_funders', 'keywords', 'keyword_frequency',
+           'grouped_keyword_counts', 'top_10_keywords', 'year_counts', 'org_pubs_monthly', 'author_lists',
+           'html_filename', 'find_best_match', 'extract_year', 'contains_month_and_year', 'split_text']
 
 # %% ../../nbs/core/05_analysis.ipynb 4
 import pubcrawler as proj
@@ -52,16 +51,16 @@ try:
 except EmptyDataError:
     raise Exception(f"No publications were found for {const.directory_name}")
 
-# %% ../../nbs/core/05_analysis.ipynb 12
+# %% ../../nbs/core/05_analysis.ipynb 13
 org_pubs = pubs[pubs['organisation'].str.contains('|'.join(const.org_names), na=False, case=False)].reset_index(drop=True)
 
-# %% ../../nbs/core/05_analysis.ipynb 14
+# %% ../../nbs/core/05_analysis.ipynb 16
 authors = [item for sublist in org_pubs['authors'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
-# %% ../../nbs/core/05_analysis.ipynb 15
+# %% ../../nbs/core/05_analysis.ipynb 17
 author_frequency = Counter(authors)
 
-# %% ../../nbs/core/05_analysis.ipynb 17
+# %% ../../nbs/core/05_analysis.ipynb 19
 def find_best_match(name: str, # single name
                     names: list # list of names
                    ):
@@ -73,7 +72,7 @@ def find_best_match(name: str, # single name
             best_score, best_match = score, n  # Corrected this line
     return best_match
 
-# %% ../../nbs/core/05_analysis.ipynb 19
+# %% ../../nbs/core/05_analysis.ipynb 21
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_author_counts = Counter()
 for name, count in author_frequency.items():
@@ -83,29 +82,30 @@ for name, count in author_frequency.items():
     else:
         grouped_author_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 20
+# %% ../../nbs/core/05_analysis.ipynb 22
 top_10_authors = grouped_author_counts.most_common(10)
 
-# Separating items and their frequencies
-items, frequencies = zip(*top_10_authors)
+if top_10_authors:
+    # Separating items and their frequencies
+    items, frequencies = zip(*top_10_authors)
 
-# Creating a horizontal bar chart
-plt.figure(figsize=(10, 8))  # Adjust size as needed
-plt.barh(items, frequencies)
-plt.xlabel('Frequency')
-plt.title('Most Prolific Authors')
-plt.savefig(f'{plots_dir}/author_frequency.png')
-
-# %% ../../nbs/core/05_analysis.ipynb 23
-organisations = [item for sublist in org_pubs['organisation'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
-
-# %% ../../nbs/core/05_analysis.ipynb 24
-organisations = [organisation for organisation in organisations if all(name not in organisation.lower() for name in const.org_names)]
+    # Creating a horizontal bar chart
+    plt.figure(figsize=(10, 8))  # Adjust size as needed
+    plt.barh(items, frequencies)
+    plt.xlabel('Frequency')
+    plt.title('Most Prolific Authors')
+    plt.savefig(f'{plots_dir}/author_frequency.png')
 
 # %% ../../nbs/core/05_analysis.ipynb 25
-organisation_frequency = Counter(organisations)
+organisations = [item for sublist in org_pubs['organisation'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
 # %% ../../nbs/core/05_analysis.ipynb 26
+organisations = [organisation for organisation in organisations if all(name not in organisation.lower() for name in const.org_names)]
+
+# %% ../../nbs/core/05_analysis.ipynb 27
+organisation_frequency = Counter(organisations)
+
+# %% ../../nbs/core/05_analysis.ipynb 28
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_org_counts = Counter()
 for name, count in organisation_frequency.items():
@@ -115,33 +115,34 @@ for name, count in organisation_frequency.items():
     else:
         grouped_org_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 27
+# %% ../../nbs/core/05_analysis.ipynb 29
 top_10_orgs = grouped_org_counts.most_common(10)
 
-# Separating items and their frequencies
-items, frequencies = zip(*top_10_orgs)
+if top_10_orgs:
+    # Separating items and their frequencies
+    items, frequencies = zip(*top_10_orgs)
 
-# Creating a horizontal bar chart
-plt.figure(figsize=(10, 8))  # Adjust size as needed
-plt.barh(items, frequencies)
-plt.xlabel('Frequency')
-plt.title('Institutional Collaborators')
-# Set x-axis ticks to show only complete numbers
-max_frequency = max(frequencies)
-step = 1  # Define step size based on your data scale
-plt.xticks(range(0, max_frequency + 1, step))
-plt.savefig(f'{plots_dir}/organisation_frequency.png')
-
-# %% ../../nbs/core/05_analysis.ipynb 30
-funders = [item for sublist in org_pubs['funders'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
-
-# %% ../../nbs/core/05_analysis.ipynb 31
-funders = [organisation for organisation in funders if all(name not in organisation.lower() for name in const.org_names)]
+    # Creating a horizontal bar chart
+    plt.figure(figsize=(10, 8))  # Adjust size as needed
+    plt.barh(items, frequencies)
+    plt.xlabel('Frequency')
+    plt.title('Institutional Collaborators')
+    # Set x-axis ticks to show only complete numbers
+    max_frequency = max(frequencies)
+    step = 1  # Define step size based on your data scale
+    plt.xticks(range(0, max_frequency + 1, step))
+    plt.savefig(f'{plots_dir}/organisation_frequency.png')
 
 # %% ../../nbs/core/05_analysis.ipynb 32
-funder_frequency = Counter(funders)
+funders = [item for sublist in org_pubs['funders'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
 # %% ../../nbs/core/05_analysis.ipynb 33
+funders = [organisation for organisation in funders if all(name not in organisation.lower() for name in const.org_names)]
+
+# %% ../../nbs/core/05_analysis.ipynb 34
+funder_frequency = Counter(funders)
+
+# %% ../../nbs/core/05_analysis.ipynb 35
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_funder_counts = Counter()
 for name, count in funder_frequency.items():
@@ -151,26 +152,27 @@ for name, count in funder_frequency.items():
     else:
         grouped_funder_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 34
+# %% ../../nbs/core/05_analysis.ipynb 36
 top_10_funders = grouped_funder_counts.most_common(10)
 
-# Separating items and their frequencies
-items, frequencies = zip(*top_10_funders)
+if top_10_funders:
+    # Separating items and their frequencies
+    items, frequencies = zip(*top_10_funders)
 
-# Creating a horizontal bar chart
-plt.figure(figsize=(10, 8))  # Adjust size as needed
-plt.barh(items, frequencies)
-plt.xlabel('Frequency')
-plt.title('Most Regular Funders')
-plt.savefig(f'{plots_dir}/funder_frequency.png')
-
-# %% ../../nbs/core/05_analysis.ipynb 37
-keywords = [item.lower() for sublist in org_pubs['keywords'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
-
-# %% ../../nbs/core/05_analysis.ipynb 38
-keyword_frequency = Counter(keywords)
+    # Creating a horizontal bar chart
+    plt.figure(figsize=(10, 8))  # Adjust size as needed
+    plt.barh(items, frequencies)
+    plt.xlabel('Frequency')
+    plt.title('Most Regular Funders')
+    plt.savefig(f'{plots_dir}/funder_frequency.png')
 
 # %% ../../nbs/core/05_analysis.ipynb 39
+keywords = [item.lower() for sublist in org_pubs['keywords'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
+
+# %% ../../nbs/core/05_analysis.ipynb 40
+keyword_frequency = Counter(keywords)
+
+# %% ../../nbs/core/05_analysis.ipynb 41
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_keyword_counts = Counter()
 for name, count in keyword_frequency.items():
@@ -180,43 +182,45 @@ for name, count in keyword_frequency.items():
     else:
         grouped_keyword_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 40
+# %% ../../nbs/core/05_analysis.ipynb 42
 top_10_keywords = grouped_keyword_counts.most_common(10)
 
-# Separating items and their frequencies
-items, frequencies = zip(*top_10_keywords)
+if top_10_keywords:
+    # Separating items and their frequencies
+    items, frequencies = zip(*top_10_keywords)
 
-# Creating a horizontal bar chart
-plt.figure(figsize=(10, 8))  # Adjust size as needed
-plt.barh(items, frequencies)
-plt.xlabel('Frequency')
-plt.title('Common Keywords')
-plt.savefig(f'{plots_dir}/keyword_frequency.png')
+    # Creating a horizontal bar chart
+    plt.figure(figsize=(10, 8))  # Adjust size as needed
+    plt.barh(items, frequencies)
+    plt.xlabel('Frequency')
+    plt.title('Common Keywords')
+    plt.savefig(f'{plots_dir}/keyword_frequency.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 43
+# %% ../../nbs/core/05_analysis.ipynb 45
 def extract_year(text):
     match = re.search(r'\d{4}', text)
     return match.group(0) if match else None
 
-# %% ../../nbs/core/05_analysis.ipynb 44
+# %% ../../nbs/core/05_analysis.ipynb 46
 org_pubs['year'] = org_pubs['date'].apply(lambda x: extract_year(str(x)))
 
-# %% ../../nbs/core/05_analysis.ipynb 45
+# %% ../../nbs/core/05_analysis.ipynb 47
 year_counts = org_pubs['year'].dropna().astype(int).value_counts().sort_index()
-plt.figure(figsize=(10, 6))
-year_counts.plot(kind='bar')
-plt.title('Publication Output')
-plt.xlabel('Year')
-plt.ylabel('Number of Publications')
-plt.xticks(rotation=45)
-plt.grid(axis='y')
-max_frequency = max(year_counts)
-step = 2 
-plt.yticks(range(0, max_frequency + 2, step))
-plt.tight_layout()
-plt.savefig(f'{plots_dir}/publication_output.png')
+if not year_counts.empty:
+    plt.figure(figsize=(10, 6))
+    year_counts.plot(kind='bar')
+    plt.title('Publication Output')
+    plt.xlabel('Year')
+    plt.ylabel('Number of Publications')
+    plt.xticks(rotation=45)
+    plt.grid(axis='y')
+    max_frequency = max(year_counts)
+    step = 2 
+    plt.yticks(range(0, max_frequency + 2, step))
+    plt.tight_layout()
+    plt.savefig(f'{plots_dir}/publication_output.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 48
+# %% ../../nbs/core/05_analysis.ipynb 50
 def contains_month_and_year(date_str:str
                            ):
     "return month and year from date string"
@@ -233,16 +237,16 @@ def contains_month_and_year(date_str:str
     except ParserError:
         return False
 
-# %% ../../nbs/core/05_analysis.ipynb 49
+# %% ../../nbs/core/05_analysis.ipynb 51
 def split_text(text:str):
     "new line for every 5 words"
     words = text.split()
     return '<br>'.join(' '.join(words[i:i+5]) for i in range(0, len(words), 5))
 
-# %% ../../nbs/core/05_analysis.ipynb 50
+# %% ../../nbs/core/05_analysis.ipynb 52
 org_pubs['date_parsed'] = org_pubs['date'].apply(contains_month_and_year)
 
-# %% ../../nbs/core/05_analysis.ipynb 51
+# %% ../../nbs/core/05_analysis.ipynb 53
 org_pubs_monthly = org_pubs[org_pubs['date_parsed']].copy()
 org_pubs_monthly['report'] = org_pubs_monthly['title'].apply(split_text)
 org_pubs_monthly['date'] = pd.to_datetime(org_pubs_monthly['date'], errors='ignore', format='mixed')
@@ -250,93 +254,95 @@ org_pubs_monthly['month_year'] = org_pubs_monthly['date'].dt.to_period('M')
 org_pubs_monthly = org_pubs_monthly.drop_duplicates(subset=['report', 'date'], keep='first')
 org_pubs_monthly['cumulative_count'] = org_pubs_monthly.groupby('month_year').cumcount() + 1
 
-fig = px.scatter(org_pubs_monthly, x='date', y='cumulative_count', title='Publication Output (Monthly)', 
-                 hover_data={'report': True, 'date': True, 'cumulative_count': False},
-                 size_max=60)
-fig.update_traces(marker=dict(color='#E3BA59'))
-fig.update_traces(textposition='top center')
-fig.update_layout(xaxis_title='Date', yaxis_title=None, 
-                  yaxis=dict(tickmode='linear', tick0=1, dtick=1, gridcolor='#878787'),
-                  xaxis=dict(gridcolor='#878787'),
-                  font=dict(family="Josefin Sans, Arial"),
-                  hoverlabel=dict(
-                      font=dict(family="Josefin Sans, Arial", color="#FFFFFF"),
-                      bgcolor="#222222"
-                  ),
-                  plot_bgcolor='#333333', showlegend=False)
-html_filename = "publication_monthly.html"
-fig.write_html(f'{plots_dir}/{html_filename}')
+if not org_pubs_monthly.empty:
+    fig = px.scatter(org_pubs_monthly, x='date', y='cumulative_count', title='Publication Output (Monthly)', 
+                     hover_data={'report': True, 'date': True, 'cumulative_count': False},
+                     size_max=60)
+    fig.update_traces(marker=dict(color='#E3BA59'))
+    fig.update_traces(textposition='top center')
+    fig.update_layout(xaxis_title='Date', yaxis_title=None, 
+                      yaxis=dict(tickmode='linear', tick0=1, dtick=1, gridcolor='#878787'),
+                      xaxis=dict(gridcolor='#878787'),
+                      font=dict(family="Josefin Sans, Arial"),
+                      hoverlabel=dict(
+                          font=dict(family="Josefin Sans, Arial", color="#FFFFFF"),
+                          bgcolor="#222222"
+                      ),
+                      plot_bgcolor='#333333', showlegend=False)
+    html_filename = "publication_monthly.html"
+    fig.write_html(f'{plots_dir}/{html_filename}')
 
-# %% ../../nbs/core/05_analysis.ipynb 54
+# %% ../../nbs/core/05_analysis.ipynb 56
 author_lists = [ast.literal_eval(sublist) for sublist in org_pubs['authors'] if isinstance(ast.literal_eval(sublist), list)]
 
-# %% ../../nbs/core/05_analysis.ipynb 55
-G = nx.Graph()
-
-if not author_lists:
-    print("author_lists is empty.")
-else:
-    for sublist in author_lists:
-        for pair in itertools.combinations(sublist, 2):
-            if G.has_edge(*pair):
-                G[pair[0]][pair[1]]['weight'] += 1
-            else:
-                G.add_edge(pair[0], pair[1], weight=1)
-if len(G.nodes) == 0 or len(G.edges) == 0:
-    print("No nodes or edges in the graph.")
-else:
-    largest_cc = max(nx.connected_components(G), key=len)
-    subgraph = G.subgraph(largest_cc)
-    pos = nx.spring_layout(G)
-    nx.set_node_attributes(G, pos, 'pos')
-    central_node = max(G.nodes, key=lambda n: G.degree(n))
-    central_pos = G.nodes[central_node]['pos']
-    zoom_range = 0.2  # Adjust the value as needed for the desired zoom level
-    x_range = [central_pos[0] - zoom_range, central_pos[0] + zoom_range]
-    y_range = [central_pos[1] - zoom_range, central_pos[1] + zoom_range]
-    edge_traces = []
-    for edge in G.edges():
-        x0, y0 = G.nodes[edge[0]]['pos']
-        x1, y1 = G.nodes[edge[1]]['pos']
-        weight = G[edge[0]][edge[1]]['weight']
-        # weight_text = f"Collaborations: {weight}"
-
-        edge_trace = go.Scatter(
-            x=[x0, x1, None], y=[y0, y1, None],
-            line=dict(width=0.5*weight, color='#888'),
-            # hoverinfo='text', text=weight_text, mode='lines')
-            hoverinfo='none', mode='lines')  
-        edge_traces.append(edge_trace)
-    x_vals, y_vals, texts, colors = [], [], [], []
-    for node in G.nodes():
-        x, y = G.nodes[node]['pos']
-        x_vals.append(x)
-        y_vals.append(y)
-        total_weight = sum(data['weight'] for _, _, data in G.edges(node, data=True))
-        texts.append(f'{node}<br>Collaborations: {total_weight}')
-        colors.append(total_weight)
-    node_trace = go.Scatter(
-        x=x_vals, y=y_vals, text=texts, mode='markers', hoverinfo='text',
-        marker=dict(
-            showscale=True, colorscale='YlOrRd', size=10, color=colors,
-            colorbar=dict(thickness=15, title='Collaborations', 
-                          xanchor='left', titleside='right'),
-            line=dict(width=0.1)),
-            hoverlabel=dict(font=dict(family="Josefin Sans, Arial")))
-    layout = go.Layout(
-        # title='<br>Network graph made with Python',
-        titlefont_size=16, showlegend=False, hovermode='closest',
-        margin=dict(b=20, l=5, r=5, t=40),
-        font=dict(family="Josefin Sans, Arial"),
-        plot_bgcolor='#333333',
-        xaxis=dict(range=x_range, showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(range=y_range, showgrid=False, zeroline=False, showticklabels=False))
-    fig = go.Figure(data=edge_traces + [node_trace], layout=layout)
-
 # %% ../../nbs/core/05_analysis.ipynb 57
+if author_lists:
+    G = nx.Graph()
+
+    if not author_lists:
+        print("author_lists is empty.")
+    else:
+        for sublist in author_lists:
+            for pair in itertools.combinations(sublist, 2):
+                if G.has_edge(*pair):
+                    G[pair[0]][pair[1]]['weight'] += 1
+                else:
+                    G.add_edge(pair[0], pair[1], weight=1)
+    if len(G.nodes) == 0 or len(G.edges) == 0:
+        print("No nodes or edges in the graph.")
+    else:
+        largest_cc = max(nx.connected_components(G), key=len)
+        subgraph = G.subgraph(largest_cc)
+        pos = nx.spring_layout(G)
+        nx.set_node_attributes(G, pos, 'pos')
+        central_node = max(G.nodes, key=lambda n: G.degree(n))
+        central_pos = G.nodes[central_node]['pos']
+        zoom_range = 0.2  # Adjust the value as needed for the desired zoom level
+        x_range = [central_pos[0] - zoom_range, central_pos[0] + zoom_range]
+        y_range = [central_pos[1] - zoom_range, central_pos[1] + zoom_range]
+        edge_traces = []
+        for edge in G.edges():
+            x0, y0 = G.nodes[edge[0]]['pos']
+            x1, y1 = G.nodes[edge[1]]['pos']
+            weight = G[edge[0]][edge[1]]['weight']
+            # weight_text = f"Collaborations: {weight}"
+
+            edge_trace = go.Scatter(
+                x=[x0, x1, None], y=[y0, y1, None],
+                line=dict(width=0.5*weight, color='#888'),
+                # hoverinfo='text', text=weight_text, mode='lines')
+                hoverinfo='none', mode='lines')  
+            edge_traces.append(edge_trace)
+        x_vals, y_vals, texts, colors = [], [], [], []
+        for node in G.nodes():
+            x, y = G.nodes[node]['pos']
+            x_vals.append(x)
+            y_vals.append(y)
+            total_weight = sum(data['weight'] for _, _, data in G.edges(node, data=True))
+            texts.append(f'{node}<br>Collaborations: {total_weight}')
+            colors.append(total_weight)
+        node_trace = go.Scatter(
+            x=x_vals, y=y_vals, text=texts, mode='markers', hoverinfo='text',
+            marker=dict(
+                showscale=True, colorscale='YlOrRd', size=10, color=colors,
+                colorbar=dict(thickness=15, title='Collaborations', 
+                              xanchor='left', titleside='right'),
+                line=dict(width=0.1)),
+                hoverlabel=dict(font=dict(family="Josefin Sans, Arial")))
+        layout = go.Layout(
+            # title='<br>Network graph made with Python',
+            titlefont_size=16, showlegend=False, hovermode='closest',
+            margin=dict(b=20, l=5, r=5, t=40),
+            font=dict(family="Josefin Sans, Arial"),
+            plot_bgcolor='#333333',
+            xaxis=dict(range=x_range, showgrid=False, zeroline=False, showticklabels=False),
+            yaxis=dict(range=y_range, showgrid=False, zeroline=False, showticklabels=False))
+        fig = go.Figure(data=edge_traces + [node_trace], layout=layout)
+
+# %% ../../nbs/core/05_analysis.ipynb 59
 html_filename = "network_graph.html"
 fig.write_html(f'{plots_dir}/{html_filename}')
 
-# %% ../../nbs/core/05_analysis.ipynb 59
+# %% ../../nbs/core/05_analysis.ipynb 61
 if shutil.make_archive(f'{const.data_path}/{const.directory_name}', 'zip', f'{const.pre_output_path}'):
     print(f"All files saved to {const.data_path}/{const.directory_name}")

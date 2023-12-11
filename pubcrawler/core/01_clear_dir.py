@@ -32,4 +32,5 @@ def delete_all_files_from_dir(target_dir):
             print("Failed to delete %s. Reason: %s" % (file_path, e))
 
 # %% ../../nbs/core/01_clean.ipynb 7
-delete_all_files_from_dir(const.pre_output_path)
+if const.clean_dir:
+    delete_all_files_from_dir(const.pre_output_path)

@@ -4,56 +4,29 @@
 
 ## Description
 
-Replace this with a project description.
-
-## Data sources
-
-<table width="100%">
-<thead>
-<tr>
-<th>
-Name
-</th>
-<th>
-Path
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="2">
-Some data files
-</td>
-<td>
-pubcrawler/store/data/data1.npy
-</td>
-<td rowspan="2">
-<a href="https://www.google.com/" target="_blank">Link</a>
-</td>
-</tr>
-<tr>
-<td>
-pubcrawler/store/data/data2.npy
-</td>
-</tr>
-<tr>
-<td>
-Test data
-</td>
-<td>
-pubcrawler/store/data/test_data
-</td>
-<td>
-<a href="https://www.google.com/" target="_blank">Link</a>
-</td>
-</tr>
-</tbody>
-</table>
+`pubcrawler` downloads all files of a specified type from the subpages
+of a website and then extracts metadata from them using LLMs. At this
+stage the primary use-case is downloading PDFs from think tanks/policy
+organisations and mapping authorship, publishing output and
+institutional affliations.
 
 ## How to use
+
+### Prerequisites
+
+You will need OpenAI API key to run all scripts. The key must be stored
+within the .env file in this directory.
+
+To explore the research output for an institution of your choosing, you
+will need to adjust the values in `const` as follows:
+
+``` python
+url = 'https://autonomy.work/' # organisation's main page
+directory_name = 'autonomy' # name of folder to save all output to 
+file_type = 'pdf' # filetype to download
+model = 'gpt-3.5-turbo' # openai model for processing text
+org_names = ['autonomy'] # alternative names for organisation used to filter out irrelevant results
+```
 
 ``` python
 import pubcrawler as proj
@@ -65,11 +38,6 @@ import pubcrawler as proj
 proj.core.run_all()
 ```
 
-    #########################################
-    # pubcrawler.core.01_first_steps #
-    #########################################
-    Doing some stuff
-
 #### Command-line interface
 
 *Note: You need to activate the conda environment first.*
@@ -80,51 +48,10 @@ List of commands
 !python -m pubcrawler.cli
 ```
 
-    Commands:
-       core
-       foo
-
 Execute commands
 
 ``` python
 !python -m pubcrawler.cli.core
 ```
 
-    #########################################
-    # pubcrawler.core.01_first_steps #
-    #########################################
-    Doing some stuff
-
-``` python
-!python -m pubcrawler.cli.foo 1 3
-```
-
-    The sum of 1 and 3 is 4.0
-
 You can find the manual for each command using `-h`
-
-``` python
-!python -m pubcrawler.cli.core -h
-```
-
-    usage: core.py [-h] [-ci CONST_INT [CONST_INT ...]]
-                   [-cf CONST_FLOAT [CONST_FLOAT ...]]
-                   [-cs CONST_STR [CONST_STR ...]] [-cj CONST_JSON] [-ln LOG_NAME]
-                   [--store-log | --no-store-log] [--print-log | --no-print-log]
-
-    Execute package.
-
-    options:
-      -h, --help            show this help message and exit
-      -ci CONST_INT [CONST_INT ...], --const-int CONST_INT [CONST_INT ...]
-                            Change int const variables. Use a key:value format
-      -cf CONST_FLOAT [CONST_FLOAT ...], --const-float CONST_FLOAT [CONST_FLOAT ...]
-                            Change float const variables. Use a key:value format
-      -cs CONST_STR [CONST_STR ...], --const-str CONST_STR [CONST_STR ...]
-                            Change string const variables. Use a key:value format
-      -cj CONST_JSON, --const-json CONST_JSON
-                            Pass a JSON file with const variables.
-      -ln LOG_NAME, --log-name LOG_NAME
-                            Set the name of the logger.
-      --store-log, --no-store-log
-      --print-log, --no-print-log
