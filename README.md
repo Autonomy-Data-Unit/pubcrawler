@@ -4,32 +4,53 @@
 
 ## Description
 
-`pubcrawler` downloads all files of a specified type from the subpages
-of a website and then extracts metadata from them using LLMs. At this
-stage the primary use-case is downloading PDFs from think tanks/policy
-organisations and mapping authorship, publishing output and
-institutional affliations.
+`pubcrawler` downloads all files of a specified type from an
+organisation’s website and then extracts metadata from each document
+using LLMs. The library’s main use-case (as demonstrated in the core
+scripts) is downloading PDFs from think tanks/policy organisations and
+mapping authorship, publishing output and institutional affliations.
 
 ## How to use
 
 ### Prerequisites
 
-You will need OpenAI API key to run all scripts. The key must be stored
-within the .env file in this directory.
+You will need an OpenAI API key to run all scripts. The key must be
+stored within the `.env` file in this directory.
+
+### Run
 
 To explore the research output for an institution of your choosing, you
-will need to adjust the values in `const` as follows:
+will need to configure the following parameters. Here is an example of
+the parameters required to scrape Autonomy’s site for PDFs and then
+processing them with GPT-4:
 
 ``` python
-url = 'https://autonomy.work/' # organisation's main page
-directory_name = 'autonomy' # name of folder to save all output to 
+url = 'https://autonomy.work/' # organisation's main webpage
+directory_name = 'autonomy' # choose a name for the folder to save output data to
 file_type = 'pdf' # filetype to download
-model = 'gpt-3.5-turbo' # openai model for processing text
-org_names = ['autonomy'] # alternative names for organisation used to filter out irrelevant results
+model = 'gpt-4' # openai model for processing text
+org_name = 'autonomy' # name of your organisation (used to filter out irrelevant results)
+```
+
+To run the software you can pass the parameters like so:
+
+``` python
+python -m pubcrawler.cli.core -cs url='https://autonomy.work/' directory_name='autonomy' file_type='pdf' model='gpt-4' org_name='autonomy'
+```
+
+Alternatively you can manually set these values in `const.ipynb` and
+then run:
+
+``` python
+nbdev_export
 ```
 
 ``` python
-import pubcrawler as proj
+pip install -e .
+```
+
+``` python
+python -m pubcrawler.cli.core
 ```
 
 #### Execute core scripts
@@ -37,10 +58,6 @@ import pubcrawler as proj
 ``` python
 proj.core.run_all()
 ```
-
-#### Command-line interface
-
-*Note: You need to activate the conda environment first.*
 
 List of commands
 
