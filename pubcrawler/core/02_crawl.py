@@ -88,22 +88,25 @@ def pubcrawl(url: str, # url to get links for
     if url == base_domain:
         sleep(5)
     scroll_to_bottom(driver)  # Scroll to bottom to load everything
+    # sleep(1)
     links = driver.find_elements(By.TAG_NAME, "a")
-    hrefs = [link.get_attribute('href') for link in links if link.is_displayed() and link.get_attribute('href') not in visited_urls]
+    # hrefs = [link.get_attribute('href') for link in links if link.is_displayed() and link.get_attribute('href') not in visited_urls]
+    hrefs = [link.get_attribute('href') for link in links if link.get_attribute('href') not in visited_urls]
     for href in hrefs:
         if href and href.endswith(f".{file_type}"):
+            # print(f"this one: {href}")
             file_links.setdefault(href, {'parent_links': []}).setdefault('parent_links', []).append(url)
         elif href and urlparse(href).netloc == base_domain and '#' not in href.split('/')[-1] and '.' not in href.split('/')[-1]:
             pubcrawl(href, visited_urls, file_type, file_links, driver, base_domain)
 
-# %% ../../nbs/core/02_crawl.ipynb 13
+# %% ../../nbs/core/02_crawl.ipynb 15
 print("𝔏𝔢𝔱 𝔱𝔥𝔢 𝔠𝔯𝔞𝔴𝔩 𝔠𝔬𝔪𝔪𝔢𝔫𝔠𝔢... 𝔓𝔯𝔬𝔰𝔱! 🍺🍺🍺")
 print("\nSites visited:")
 pubcrawl(url, visited_urls, file_type, file_links, driver, urlparse(url).netloc)
 print("\nℭ𝔯𝔞𝔴𝔩 𝔠𝔬𝔪𝔭𝔩𝔢𝔱𝔢 💀💀💀")
 print(f"Visited {len(visited_urls)} webpages")
 
-# %% ../../nbs/core/02_crawl.ipynb 15
+# %% ../../nbs/core/02_crawl.ipynb 17
 # pd.DataFrame([{'file_link': key, 'parent_links': file_links[key]['parent_links']} for key in file_links]).to_csv(f'{const.pre_output_path}/files.csv', index=False)
 with open(f'{const.pre_output_path}/data.json', 'w') as f:
     json.dump(file_links, f)

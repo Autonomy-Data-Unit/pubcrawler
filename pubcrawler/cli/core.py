@@ -5,6 +5,7 @@ __all__ = ['cmd_name', 'cmd_description', 'parser', 'args', 'const_dict', 'log_n
 
 # %% ../../nbs/cli/cli_01_core.ipynb 4
 import sys
+import ast
 
 import pubcrawler as proj
 from .. import const, log, utils, tools, core
@@ -41,4 +42,14 @@ log.settings(log_name, store_log_path=store_log_path, print_log=args.print_log)
 adutils.cli.log_all_const()
 
 ## Run command with settings
-core.run_all()
+if const.selected_scripts:
+    if isinstance(const.selected_scripts, list):
+        core.run_selected_scripts(const.selected_scripts)
+    elif isinstance(const.selected_scripts, str):
+        selected_scripts = ast.literal_eval(const.selected_scripts)
+        core.run_selected_scripts(selected_scripts)    
+    else:
+        print(f"{const.selected_scripts} was neither string nor list")
+else:
+    ## Run command with settings
+    core.run_all()

@@ -30,6 +30,8 @@ plotly = "^5.18.0"
 jupyter-dash = "^0.4.2"
 jupyterlab = "3.6"
 python-levenshtein = "^0.23.0"
+pycryptodome = "^3.19.0"
+boto3 = "^1.34.4"
 
 
 [[tool.poetry.source]]
