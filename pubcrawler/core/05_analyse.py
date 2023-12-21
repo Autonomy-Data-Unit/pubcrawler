@@ -10,7 +10,7 @@ __all__ = ['plots_dir', 'org_names', 'org_pubs', 'authors', 'author_frequency', 
 # %% ../../nbs/core/05_analysis.ipynb 4
 import pubcrawler as proj
 from .. import const, log, utils, tools
-import adu_proj.utils as adutils
+# import adu_proj.utils as adutils
 
 # %% ../../nbs/core/05_analysis.ipynb 5
 from collections import Counter

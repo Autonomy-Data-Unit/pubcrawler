@@ -8,7 +8,7 @@ __all__ = ['API_KEY', 'client', 'org_names', 'pub_metadata', 'extract_text_from_
 # %% ../../nbs/core/04_metadata.ipynb 4
 import pubcrawler as proj
 from .. import const, log, utils, tools
-import adu_proj.utils as adutils
+# import adu_proj.utils as adutils
 
 # %% ../../nbs/core/04_metadata.ipynb 5
 import json

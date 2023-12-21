@@ -6,7 +6,7 @@ __all__ = ['upload_zip_to_s3']
 # %% ../../nbs/core/06_archive.ipynb 4
 import pubcrawler as proj
 from .. import const, log, utils, tools
-import adu_proj.utils as adutils
+# import adu_proj.utils as adutils
 
 # %% ../../nbs/core/06_archive.ipynb 5
 import shutil

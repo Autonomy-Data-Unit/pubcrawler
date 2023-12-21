@@ -9,7 +9,7 @@ import ast
 
 import pubcrawler as proj
 from .. import const, log, utils, tools, core
-import adu_proj.utils as adutils
+# import adu_proj.utils as adutils
 
 # %% ../../nbs/cli/cli_01_core.ipynb 5
 def main(): pass # This is necessary for console_scripts
