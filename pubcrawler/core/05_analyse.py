@@ -57,13 +57,13 @@ org_names = [name for name in [const.org_name, const.org_name_2, const.org_name_
 # %% ../../nbs/core/05_analysis.ipynb 12
 org_pubs = pubs[pubs['organisation'].str.contains('|'.join(org_names), na=False, case=False)].reset_index(drop=True)
 
-# %% ../../nbs/core/05_analysis.ipynb 14
+# %% ../../nbs/core/05_analysis.ipynb 15
 authors = [item for sublist in org_pubs['authors'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
-# %% ../../nbs/core/05_analysis.ipynb 15
+# %% ../../nbs/core/05_analysis.ipynb 16
 author_frequency = Counter(authors)
 
-# %% ../../nbs/core/05_analysis.ipynb 17
+# %% ../../nbs/core/05_analysis.ipynb 18
 def find_best_match(name: str, # single name
                     names: list # list of names
                    ):
@@ -75,7 +75,7 @@ def find_best_match(name: str, # single name
             best_score, best_match = score, n  # Corrected this line
     return best_match
 
-# %% ../../nbs/core/05_analysis.ipynb 19
+# %% ../../nbs/core/05_analysis.ipynb 20
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_author_counts = Counter()
 for name, count in author_frequency.items():
@@ -85,7 +85,7 @@ for name, count in author_frequency.items():
     else:
         grouped_author_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 20
+# %% ../../nbs/core/05_analysis.ipynb 21
 top_10_authors = grouped_author_counts.most_common(10)
 
 if top_10_authors:
@@ -99,16 +99,16 @@ if top_10_authors:
     plt.title('Most Prolific Authors')
     plt.savefig(f'{plots_dir}/author_frequency.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 23
+# %% ../../nbs/core/05_analysis.ipynb 24
 organisations = [item for sublist in org_pubs['organisation'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
-# %% ../../nbs/core/05_analysis.ipynb 24
+# %% ../../nbs/core/05_analysis.ipynb 25
 organisations = [organisation for organisation in organisations if all(name not in organisation.lower() for name in org_names)]
 
-# %% ../../nbs/core/05_analysis.ipynb 25
+# %% ../../nbs/core/05_analysis.ipynb 26
 organisation_frequency = Counter(organisations)
 
-# %% ../../nbs/core/05_analysis.ipynb 26
+# %% ../../nbs/core/05_analysis.ipynb 27
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_org_counts = Counter()
 for name, count in organisation_frequency.items():
@@ -118,7 +118,7 @@ for name, count in organisation_frequency.items():
     else:
         grouped_org_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 27
+# %% ../../nbs/core/05_analysis.ipynb 28
 top_10_orgs = grouped_org_counts.most_common(10)
 
 if top_10_orgs:
@@ -136,16 +136,16 @@ if top_10_orgs:
     plt.xticks(range(0, max_frequency + 1, step))
     plt.savefig(f'{plots_dir}/organisation_frequency.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 30
+# %% ../../nbs/core/05_analysis.ipynb 31
 funders = [item for sublist in org_pubs['funders'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
-# %% ../../nbs/core/05_analysis.ipynb 31
+# %% ../../nbs/core/05_analysis.ipynb 32
 funders = [organisation for organisation in funders if all(name not in organisation.lower() for name in org_names)]
 
-# %% ../../nbs/core/05_analysis.ipynb 32
+# %% ../../nbs/core/05_analysis.ipynb 33
 funder_frequency = Counter(funders)
 
-# %% ../../nbs/core/05_analysis.ipynb 33
+# %% ../../nbs/core/05_analysis.ipynb 34
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_funder_counts = Counter()
 for name, count in funder_frequency.items():
@@ -155,7 +155,7 @@ for name, count in funder_frequency.items():
     else:
         grouped_funder_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 34
+# %% ../../nbs/core/05_analysis.ipynb 35
 top_10_funders = grouped_funder_counts.most_common(10)
 
 if top_10_funders:
@@ -169,13 +169,13 @@ if top_10_funders:
     plt.title('Most Regular Funders')
     plt.savefig(f'{plots_dir}/funder_frequency.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 37
+# %% ../../nbs/core/05_analysis.ipynb 38
 keywords = [item.lower() for sublist in org_pubs['keywords'] if isinstance(ast.literal_eval(sublist), list) for item in ast.literal_eval(sublist)]
 
-# %% ../../nbs/core/05_analysis.ipynb 38
+# %% ../../nbs/core/05_analysis.ipynb 39
 keyword_frequency = Counter(keywords)
 
-# %% ../../nbs/core/05_analysis.ipynb 39
+# %% ../../nbs/core/05_analysis.ipynb 40
 threshold = 85  # similarity threshold, can adjust as needed
 grouped_keyword_counts = Counter()
 for name, count in keyword_frequency.items():
@@ -185,7 +185,7 @@ for name, count in keyword_frequency.items():
     else:
         grouped_keyword_counts[name] = count
 
-# %% ../../nbs/core/05_analysis.ipynb 40
+# %% ../../nbs/core/05_analysis.ipynb 41
 top_10_keywords = grouped_keyword_counts.most_common(10)
 
 if top_10_keywords:
@@ -199,15 +199,15 @@ if top_10_keywords:
     plt.title('Common Keywords')
     plt.savefig(f'{plots_dir}/keyword_frequency.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 43
+# %% ../../nbs/core/05_analysis.ipynb 44
 def extract_year(text):
     match = re.search(r'\d{4}', text)
     return match.group(0) if match else None
 
-# %% ../../nbs/core/05_analysis.ipynb 44
+# %% ../../nbs/core/05_analysis.ipynb 45
 org_pubs['year'] = org_pubs['date'].apply(lambda x: extract_year(str(x)))
 
-# %% ../../nbs/core/05_analysis.ipynb 45
+# %% ../../nbs/core/05_analysis.ipynb 46
 year_counts = org_pubs['year'].dropna().astype(int).value_counts().sort_index()
 if not year_counts.empty:
     plt.figure(figsize=(10, 6))
@@ -223,7 +223,7 @@ if not year_counts.empty:
     plt.tight_layout()
     plt.savefig(f'{plots_dir}/publication_output.png')
 
-# %% ../../nbs/core/05_analysis.ipynb 48
+# %% ../../nbs/core/05_analysis.ipynb 49
 def contains_month_and_year(date_str:str
                            ):
     "return month and year from date string"
@@ -240,16 +240,16 @@ def contains_month_and_year(date_str:str
     except ParserError:
         return False
 
-# %% ../../nbs/core/05_analysis.ipynb 49
+# %% ../../nbs/core/05_analysis.ipynb 50
 def split_text(text:str):
     "new line for every 5 words"
     words = text.split()
     return '<br>'.join(' '.join(words[i:i+5]) for i in range(0, len(words), 5))
 
-# %% ../../nbs/core/05_analysis.ipynb 50
+# %% ../../nbs/core/05_analysis.ipynb 51
 org_pubs['date_parsed'] = org_pubs['date'].apply(contains_month_and_year)
 
-# %% ../../nbs/core/05_analysis.ipynb 51
+# %% ../../nbs/core/05_analysis.ipynb 52
 org_pubs_monthly = org_pubs[org_pubs['date_parsed']].copy()
 org_pubs_monthly['report'] = org_pubs_monthly['title'].apply(split_text)
 org_pubs_monthly['date'] = pd.to_datetime(org_pubs_monthly['date'], errors='ignore', format='mixed')
@@ -275,10 +275,10 @@ if not org_pubs_monthly.empty:
     html_filename = "publication_monthly.html"
     fig.write_html(f'{plots_dir}/{html_filename}')
 
-# %% ../../nbs/core/05_analysis.ipynb 54
+# %% ../../nbs/core/05_analysis.ipynb 55
 author_lists = [ast.literal_eval(sublist) for sublist in org_pubs['authors'] if isinstance(ast.literal_eval(sublist), list)]
 
-# %% ../../nbs/core/05_analysis.ipynb 55
+# %% ../../nbs/core/05_analysis.ipynb 56
 if author_lists:
     G = nx.Graph()
 
@@ -342,10 +342,6 @@ if author_lists:
             yaxis=dict(range=y_range, showgrid=False, zeroline=False, showticklabels=False))
         fig = go.Figure(data=edge_traces + [node_trace], layout=layout)
 
-# %% ../../nbs/core/05_analysis.ipynb 57
+# %% ../../nbs/core/05_analysis.ipynb 58
 html_filename = "network_graph.html"
 fig.write_html(f'{plots_dir}/{html_filename}')
-
-# %% ../../nbs/core/05_analysis.ipynb 59
-if shutil.make_archive(f'{const.data_path}/{const.directory_name}', 'zip', f'{const.pre_output_path}'):
-    print(f"All files saved to {const.data_path}/{const.directory_name}")

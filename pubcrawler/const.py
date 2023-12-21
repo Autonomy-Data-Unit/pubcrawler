@@ -2,7 +2,8 @@
 
 # %% auto 0
 __all__ = ['root_path', 'store_path', 'logs_path', 'data_path', 'pre_output_path', 'output_path', 'figs_path', 'style_path',
-           'url', 'directory_name', 'file_type', 'model', 'org_name', 'org_name_2', 'org_name_3', 'clean_dir']
+           'url', 'directory_name', 'file_type', 'model', 'org_name', 'org_name_2', 'org_name_3', 'org_file_filter',
+           'selected_scripts', 's3_bucket']
 
 # %% ../nbs/const.ipynb 4
 from pathlib import Path
@@ -29,13 +30,19 @@ Path(output_path).mkdir(exist_ok=True)
 Path(figs_path).mkdir(exist_ok=True)
 
 # %% ../nbs/const.ipynb 8
-url = 'https://oxgs.org/'
-directory_name = 'oxford_global'
+url = 'https://autonomy.work/'
+directory_name = 'autonomy'
 file_type = 'pdf'
 model = 'gpt-4'
-org_name = 'oxford global society'
+org_name = 'autonomy'
 org_name_2 = None # optional extra name/abbreviation for organisation
 org_name_3 = None # optional extra name/abbreviation for organisation
 
-# %% ../nbs/const.ipynb 9
-clean_dir = False
+# %% ../nbs/const.ipynb 10
+org_file_filter = True
+
+# %% ../nbs/const.ipynb 11
+selected_scripts = []
+
+# %% ../nbs/const.ipynb 12
+s3_bucket = ""

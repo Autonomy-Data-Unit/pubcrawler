@@ -19,6 +19,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import WebDriverException
 from tqdm import tqdm
+from urllib.parse import unquote
 
 # %% ../../nbs/core/03_download.ipynb 6
 file_folder = const.file_type
@@ -68,8 +69,9 @@ def download_file(file_url: str, # file url
         # Verify download and close the browser
         driver.close()
         driver.quit()
-        if os.path.isfile(file_path):
-            return file_path
+        # print(file_path)
+        if os.path.isfile(unquote(file_path)):
+            return unquote(file_path)
         else:
             print(f"Download failed for {file_url}")
             return None
