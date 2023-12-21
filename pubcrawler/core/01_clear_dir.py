@@ -6,7 +6,7 @@ __all__ = ['delete_all_files_from_dir']
 # %% ../../nbs/core/01_clean.ipynb 4
 import pubcrawler as proj
 from .. import const, log, utils, tools
-# import adu_proj.utils as adutils
+import adu_proj.utils as adutils
 
 # %% ../../nbs/core/01_clean.ipynb 5
 import os

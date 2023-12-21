@@ -7,7 +7,7 @@ __all__ = ['chrome_options', 'service', 'driver', 'visited_urls', 'file_links', 
 # %% ../../nbs/core/02_crawl.ipynb 4
 import pubcrawler as proj
 from .. import const, log, utils, tools
-# import adu_proj.utils as adutils
+import adu_proj.utils as adutils
 
 # %% ../../nbs/core/02_crawl.ipynb 5
 from selenium import webdriver

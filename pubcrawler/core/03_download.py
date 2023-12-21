@@ -6,7 +6,7 @@ __all__ = ['file_folder', 'file_dir', 'options', 'download_file']
 # %% ../../nbs/core/03_download.ipynb 4
 import pubcrawler as proj
 from .. import const, log, utils, tools
-# import adu_proj.utils as adutils
+import adu_proj.utils as adutils
 
 # %% ../../nbs/core/03_download.ipynb 5
 import json

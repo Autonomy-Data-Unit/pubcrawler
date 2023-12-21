@@ -6,7 +6,7 @@ __all__ = ['hello_world']
 # %% ../../nbs/utils/utils_01_general.ipynb 5
 import pubcrawler as proj
 from .. import const, log, utils, tools
-# import adu_proj.utils as adutils
+import adu_proj.utils as adutils
 
 # %% ../../nbs/utils/utils_01_general.ipynb 7
 def hello_world():
